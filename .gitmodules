@@ -1,0 +1,3 @@
+[submodule "chatbot/hs-orm"]
+	path = chatbot/hs-orm
+	url = https://github.com/sozu/hs-orm.git

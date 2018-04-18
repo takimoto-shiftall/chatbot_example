@@ -1,0 +1,38 @@
+version: '3'
+services:
+  #elasticsearch:
+  #  build: "./elasticsearch"
+  #  image: "chatbot_es:develop"
+  #  volumes:
+  #    - "./elasticsearch/data:/usr/share/elasticsearch/data"
+  #    - "./elasticsearch/config/analyzer:/usr/share/elasticsearch/config/analyzer"
+  #  ports:
+  #    - "9200:9200"
+  #    - "9300:9300"
+  #  container_name: chatbot_es
+  db:
+    image: "postgres:10"
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/chatbot
+    volumes:
+      - chatbot_db:/var/lib/postgresql/data/chatbot
+      - "./db/initdb.d:/docker-entrypoint-initdb.d"
+    container_name: chatbot_db
+  #app:
+  #  build: "./chatbot"
+  #  image: "chatbot_app:develop"
+  #  ports:
+  #    - "18000:8000"
+  #  #command: ./wait-for-it.sh db:5432 -t 30 -- 
+  #  command: bash -c "stack build && stack exec chatbot-exe"
+  #  volumes:
+  #    - "./chatbot:/home/chatbot"
+  #    - "./chatbot/.stack:/root/.stack"
+  #  #depends_on:
+  #  #  - db
+  #  container_name: chatbot_app
+volumes:
+  chatbot_db:
