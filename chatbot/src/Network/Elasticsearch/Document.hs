@@ -1,0 +1,1 @@
+module Network.Elasticsearch.Document where

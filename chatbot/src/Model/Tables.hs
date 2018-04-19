@@ -1,7 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedLabels #-}
 
-module Models where
+module Model.Tables where
 
 import Control.Lens hiding ((:>))
 import Data.Time
@@ -12,6 +12,7 @@ import Database.ORM.Dialect.PostgreSQL
 generateModel (PostgreSQL "postgresql://postgres:postgres@127.0.0.1:15432/chatbot" 10) "bot" "BotCols"
 
 type Bot = "bot" :++ Record BotCols
+
 
 newBot :: IO Bot
 newBot = do

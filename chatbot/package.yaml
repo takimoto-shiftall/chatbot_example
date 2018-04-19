@@ -31,6 +31,8 @@ dependencies:
 - aeson
 - lens
 - extensible
+- monad-logger
+- fast-logger
 - http-types
 - http-conduit
 - hs-graph
@@ -47,6 +49,9 @@ default-extensions:
   - TypeApplications
   - MultiParamTypeClasses
   - ImplicitParams
+
+ghc-options:
+- -fexternal-interpreter
 
 library:
   source-dirs: src
