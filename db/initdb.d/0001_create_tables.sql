@@ -1,3 +1,5 @@
+\connect chatbot
+
 CREATE TABLE bot (
     id serial PRIMARY KEY,
     token text NOT NULL,

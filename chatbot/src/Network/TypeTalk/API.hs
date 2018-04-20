@@ -5,6 +5,7 @@
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE OverloadedLabels #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Network.TypeTalk.API where
 
@@ -32,11 +33,22 @@ topicMessages :: (With '[TypeTalkBotC])
               -> IO TopicMessages
 topicMessages count from forward = do
     bot@(TypeTalkBotC (TypeTalkBot _ topicId)) <- readIORef $ contextOf @TypeTalkBotC ?cxt
+
+    $(logQD' typeTalkTag) ?cxt $
+        "Start trying to get messages of topic#" ++ show topicId
+            ++ " (from: #" ++ show (maybe 0 id from)
+            ++ ", count: " ++ maybe "unspecified" show count ++ ")"
+
     let conv k = (k, ) . Just . fromString . show
     let q = catMaybes [ conv "count" <$> count
                       , conv "from" <$> from
                       , Just ("direction", Just $ if forward then "forward" else "backward")]
-    get bot ("/v1/topics/" ++ show topicId) q
+    messages <- get bot ("/v1/topics/" ++ show topicId) q
+
+    $(logQD' typeTalkTag) ?cxt $
+        "    " ++ show (length (view #posts messages)) ++ " messages are obtained"
+
+    return messages
 
 allTopicMessages :: (With '[TypeTalkBotC])
                  => Maybe Int

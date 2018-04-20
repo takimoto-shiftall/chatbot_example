@@ -67,7 +67,7 @@ importPosts bot posts = do
                                     <: emptyRecord)
     with @'[ESContext] $ do
         forM_ (sep 100 docs) $ \ds -> do
-            bulk "post" (map (Index Nothing) ds)
+            bulk "chatbot" (map (Index Nothing) ds)
     where
         sep :: Int -> [a] -> [[a]]
         sep len vs

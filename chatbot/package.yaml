@@ -50,9 +50,6 @@ default-extensions:
   - MultiParamTypeClasses
   - ImplicitParams
 
-ghc-options:
-- -fexternal-interpreter
-
 library:
   source-dirs: src
 
@@ -64,6 +61,7 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -fexternal-interpreter
     dependencies:
     - chatbot
 
@@ -76,4 +74,5 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - hspec
     - chatbot

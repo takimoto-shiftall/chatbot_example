@@ -6,6 +6,7 @@ module Network.Elasticsearch.Connection where
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.ByteString hiding (map)
+import qualified Data.ByteString.Char8 as C8
 import qualified Data.ByteString.Lazy as B
 import Data.Aeson
 import Network.HTTP.Conduit
@@ -19,6 +20,12 @@ data Elasticsearch =
                   }
 
 data ESContext = ESContext Elasticsearch
+
+esurl :: ESContext
+      -> String
+esurl (ESContext (Elasticsearch {..})) = proto ++ C8.unpack host ++ ":" ++ show port
+    where
+        proto = if secure then "https://" else "http://"
 
 execute :: (MonadIO m, ToJSON a, FromJSON b)
         => ESContext

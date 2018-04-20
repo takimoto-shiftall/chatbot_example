@@ -13,7 +13,6 @@ generateModel (PostgreSQL "postgresql://postgres:postgres@127.0.0.1:15432/chatbo
 
 type Bot = "bot" :++ Record BotCols
 
-
 newBot :: IO Bot
 newBot = do
     now <- getCurrentTime

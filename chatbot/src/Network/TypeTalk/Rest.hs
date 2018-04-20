@@ -15,6 +15,8 @@ import Network.HTTP.Conduit
 import Network.HTTP.Simple
 import Data.Resource
 
+typeTalkTag = "Network.TypeTalk"
+
 typeTalkApiUrl :: String
                -> String
 typeTalkApiUrl path = "https://typetalk.com/api" ++ path

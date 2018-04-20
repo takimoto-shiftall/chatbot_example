@@ -8,6 +8,8 @@ import Data.IORef
 import Data.Resource
 import Network.Elasticsearch.Connection
 
+elasticsearchTag = "Network.Elasticsearch"
+
 instance Resource Elasticsearch where
     type ContextType Elasticsearch = ESContext
 

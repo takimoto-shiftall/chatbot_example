@@ -1,0 +1,64 @@
+{
+    "settings": {
+        "analysis": {
+            "char_filter": {
+                "icu": {
+                    "type": "icu_normalizer",
+                    "name": "nfkc_cf",
+                    "mode": "compose"
+                }
+            },
+            "tokenizer": {
+                "kuromoji": {
+                    "type": "kuromoji_tokenizer",
+                    "mode": "search"
+                }
+            },
+            "analyzer": {
+                "jp_message": {
+                    "char_filter": ["icu"],
+                    "tokenizer": "kuromoji",
+                    "filter": [
+                        "kuromoji_baseform",
+                        "cjk_width",
+                        "kuromoji_part_of_speech",
+                        "ja_stop",
+                        "kuromoji_stemmer",
+                        "lowercase"
+                    ]
+                }
+            }
+        }
+    },
+    "mappings": {
+        "_doc": {
+            "properties": {
+                "post_id": {
+                    "type": "long"
+                },
+                "topic_id": {
+                    "type": "long"
+                },
+                "account_id": {
+                    "type": "long"
+                },
+                "message":{
+                    "type": "text",
+                    "analyzer": "jp_message"
+                },
+                "talks": {
+                    "type": "long"
+                },
+                "likes": {
+                    "type": "long"
+                },
+                "created_at": {
+                    "type": "date"
+                },
+                "modified_at": {
+                    "type": "date"
+                }
+            }
+        }
+    }
+}
