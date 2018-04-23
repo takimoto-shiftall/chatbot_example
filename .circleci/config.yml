@@ -27,7 +27,8 @@ jobs:
       - run:
           name: Build & Test
           working_directory: ${CIRCLE_WORKING_DIRECTORY}/chatbot
-          command: ~/.local/bin/stack build --test --system-ghc --only-dependencies
+          command: ~/.local/bin/stack --install-ghc test --only-dependencies
+          command: ~/.local/bin/stack test
 
       - save_cache:
           key: stack
