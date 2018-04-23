@@ -6,6 +6,10 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Resolve submodules
+          command: git submodule update --init --recursive
+
       - restore_cache:
           keys:
             - stack-executable
