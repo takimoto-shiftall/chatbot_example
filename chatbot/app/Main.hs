@@ -12,7 +12,7 @@ import Data.Resource
 import Database.ORM
 import Database.ORM.Dialect.PostgreSQL
 import Network.Elasticsearch
-import Services
+import Service.Import
 
 main :: IO ()
 main = do

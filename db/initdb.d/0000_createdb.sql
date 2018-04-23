@@ -1,1 +1,1 @@
-CREATE DATABASE chatbot ENCODING = 'UTF8';
+CREATE DATABASE chatbot_template ENCODING = 'UTF8' IS_TEMPLATE = true;

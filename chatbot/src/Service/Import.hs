@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE OverloadedLabels #-}
 
-module Services where
+module Service.Import where
 
 import Control.Monad
 import Data.IORef
@@ -42,19 +42,27 @@ listBots = do
 type BotPostUpdate = "bot" :// Record (BotCols ^@ '["id", "last_post", "modified_at"])
 type PostUpdateGraph = Graph BotPostUpdate
 
+updateLastPost :: (With '[DBContext PostgreSQL])
+               => Bot
+               -> TopicPost
+               -> IO ()
+updateLastPost bot post = do
+    now <- getCurrentTime
+    let newBot = let r = getRecord bot in Model ( #id @= view #id r
+                                               <: #last_post @= toInteger (view #id post)
+                                               <: #modified_at @= now
+                                               <: emptyRecord) :: BotPostUpdate
+    let (graph, _) = newBot +< (newGraph :: PostUpdateGraph)
+    restoreGraph graph (Proxy :: Proxy (Serialize PostUpdateGraph))
+    return ()
+
 importPosts :: (With '[DBContext PostgreSQL, ESContext])
             => Bot
             -> [TopicPost]
             -> IO ()
 importPosts _ [] = return ()
 importPosts bot posts = do
-    now <- getCurrentTime
-    let newBot = let r = getRecord bot in Model ( #id @= view #id r
-                                               <: #last_post @= toInteger (view #id (last posts))
-                                               <: #modified_at @= now
-                                               <: emptyRecord) :: BotPostUpdate
-    let graph = fst $ newBot +< (newGraph :: PostUpdateGraph)
-    with @'[DBContext PostgreSQL] $ restoreGraph graph (Proxy :: Proxy (Serialize PostUpdateGraph))
+    with @'[DBContext PostgreSQL] $ updateLastPost bot (last posts)
 
     let docs = (`map` posts) $ \p -> ( #post_id @= view #id p
                                     <: #topic_id @= view #topicId p

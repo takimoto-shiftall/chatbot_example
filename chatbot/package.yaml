@@ -33,6 +33,8 @@ dependencies:
 - extensible
 - monad-logger
 - fast-logger
+- HDBC
+- postgresql-simple
 - http-types
 - http-conduit
 - hs-graph
@@ -50,6 +52,9 @@ default-extensions:
   - MultiParamTypeClasses
   - ImplicitParams
 
+ghc-options:
+- -fexternal-interpreter
+
 library:
   source-dirs: src
 
@@ -61,7 +66,6 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -fexternal-interpreter
     dependencies:
     - chatbot
 

@@ -1,4 +1,4 @@
-\connect chatbot
+\connect chatbot_template
 
 CREATE TABLE bot (
     id serial PRIMARY KEY,
@@ -8,3 +8,5 @@ CREATE TABLE bot (
     created_at timestamp with time zone NOT NULL,
     modified_at timestamp with time zone NOT NULL
 );
+
+CREATE DATABASE chatbot TEMPLATE = chatbot_template;
