@@ -37,10 +37,6 @@ jobs:
           name: Start containers
           command: docker-compose up -d
 
-      - run:
-          name: Check ES
-          command: docker-compose logs elasticsearch
-
       #- run:
       #    name: Install GHC libraries
       #    command: |
@@ -57,3 +53,9 @@ jobs:
           command: |
             cd chatbot
             ~/.local/bin/stack test
+
+      - run:
+          name: Check ES
+          command: docker-compose logs elasticsearch
+          when: on_fail
+
