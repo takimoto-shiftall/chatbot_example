@@ -4,6 +4,8 @@ services:
     build: "./elasticsearch"
     image: "chatbot_es:develop"
     environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
       - "chatbot_es:/usr/share/elasticsearch/data"
