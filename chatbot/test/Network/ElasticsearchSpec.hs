@@ -37,7 +37,7 @@ execOnIndex :: B.ByteString
             -> (With '[ESContext] => IO ())
             -> IO ()
 execOnIndex index f = (do
-        r <- newIORef $ Elasticsearch "localhost" 9200 False
+        r <- newIORef $ Elasticsearch "127.0.0.1" 9200 False
         withContext @'[ESContext] (r `RCons` RNil) $ do
             createTestIndex index
             f
@@ -50,7 +50,7 @@ createTestIndex :: B.ByteString -> IO ()
 createTestIndex index = do
     let req = setRequestPath index
             . setRequestPort 9200
-            . setRequestHost "localhost"
+            . setRequestHost "127.0.0.1"
             . setRequestMethod "PUT" $ defaultRequest 
     res <- httpBS req
     statusCode (getResponseStatus res) `shouldBe` 200
@@ -63,7 +63,7 @@ countTestIndex :: B.ByteString -> IO Int
 countTestIndex index = do
     let req = setRequestPath (C8.concat [index, "/_count"])
             . setRequestPort 9200
-            . setRequestHost "localhost"
+            . setRequestHost "127.0.0.1"
             . setRequestMethod "GET" $ defaultRequest 
     count <$> getResponseBody <$> httpJSON req
 
@@ -71,7 +71,7 @@ deleteTestIndex :: B.ByteString -> IO ()
 deleteTestIndex index = do
     let req = setRequestPath index
             . setRequestPort 9200
-            . setRequestHost "localhost"
+            . setRequestHost "127.0.0.1"
             . setRequestMethod "DELETE" $ defaultRequest 
     res <- httpBS req
     statusCode (getResponseStatus res) `shouldBe` 200
