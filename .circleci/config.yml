@@ -13,6 +13,9 @@ jobs:
       - restore_cache:
           keys:
             - stack-executable
+
+      - restore_cache:
+          keys:
             - stack
 
       - run:
@@ -35,10 +38,14 @@ jobs:
           command: docker-compose up -d
 
       - run:
-          name: Install GHC libraries
-          command: |
-            cd chatbot
-            ~/.local/bin/stack --install-ghc test --only-dependencies
+          name: Check ES
+          command: docker-compose logs elasticsearch
+
+      #- run:
+      #    name: Install GHC libraries
+      #    command: |
+      #      cd chatbot
+      #      ~/.local/bin/stack --install-ghc test --only-dependencies
 
       - save_cache:
           key: stack
