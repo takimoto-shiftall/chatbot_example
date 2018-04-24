@@ -35,13 +35,18 @@ jobs:
           command: docker-compose up -d
 
       - run:
-          name: Build & Test
+          name: Install GHC libraries
           command: |
             cd chatbot
             ~/.local/bin/stack --install-ghc test --only-dependencies
-            ~/.local/bin/stack test
 
       - save_cache:
           key: stack
           paths:
             - ~/.stack
+
+      - run:
+          name: Build & Test
+          command: |
+            cd chatbot
+            ~/.local/bin/stack test
