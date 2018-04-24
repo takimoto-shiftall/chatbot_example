@@ -3,6 +3,8 @@ services:
   elasticsearch:
     build: "./elasticsearch"
     image: "chatbot_es:develop"
+    environment:
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
       - "chatbot_es:/usr/share/elasticsearch/data"
       - "./elasticsearch/config/analyzer:/usr/share/elasticsearch/config/analyzer"
