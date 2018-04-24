@@ -30,8 +30,8 @@ jobs:
 
       - run:
           name: Build & Test
-          working_directory: ${CIRCLE_WORKING_DIRECTORY}/chatbot
           command: |
+            cd chatbot
             ~/.local/bin/stack --install-ghc test --only-dependencies
             ~/.local/bin/stack test
 
