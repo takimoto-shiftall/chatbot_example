@@ -14,6 +14,29 @@
                     "mode": "search"
                 }
             },
+            "filter": {
+                "part_of_speech": {
+                    "type": "kuromoji_part_of_speech",
+                    "stoptags": [
+                        "名詞-数",
+                        "名詞-非自立-一般",
+                        "名詞-代名詞-一般",
+                        "名詞-代名詞-縮約",
+                        "動詞-非自立",
+                        "副詞-助詞類接続"
+                    ]
+                },
+                "message_stop": {
+                    "type": "ja_stop",
+                    "stopwords": [
+                        "_japanese_",
+                        "http",
+                        "https",
+                        "www",
+                        "com"
+                    ]
+                }
+            },
             "analyzer": {
                 "jp_message": {
                     "char_filter": ["icu"],
@@ -21,8 +44,8 @@
                     "filter": [
                         "kuromoji_baseform",
                         "cjk_width",
-                        "kuromoji_part_of_speech",
-                        "ja_stop",
+                        "part_of_speech",
+                        "message_stop",
                         "kuromoji_stemmer",
                         "lowercase"
                     ]
@@ -44,7 +67,8 @@
                 },
                 "message":{
                     "type": "text",
-                    "analyzer": "jp_message"
+                    "analyzer": "jp_message",
+                    "fielddata": true
                 },
                 "talks": {
                     "type": "long"
