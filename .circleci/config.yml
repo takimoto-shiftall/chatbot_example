@@ -38,7 +38,7 @@ jobs:
           command: docker-compose up -d
 
       - run:
-          name: Install GHC libraries
+          name: Install GHC libraries (Should finish quickly)
           command: |
             cd chatbot
             ~/.local/bin/stack --install-ghc test --only-dependencies
