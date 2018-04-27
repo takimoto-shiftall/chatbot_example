@@ -16,7 +16,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - stack
+            - stack-{{ checksum "chatbot/package.yaml" }}-{{ checksum "chatbot/package.yaml" }}
 
       - run:
           name: Install Stack
@@ -44,7 +44,7 @@ jobs:
             ~/.local/bin/stack --install-ghc test --only-dependencies
 
       - save_cache:
-          key: stack
+          key: stack-{{ checksum "chatbot/package.yaml" }}-{{ checksum "chatbot/package.yaml" }}
           paths:
             - ~/.stack
 
