@@ -28,5 +28,5 @@ script:
   - stack --no-terminal test --haddock --no-haddock-deps --coverage
 
 after_script:
-  - cabal install codecov-haskell
-  - codecov-haskell chatbot-test
+  - cabal sandbox init && cabal install codecov-haskell
+  - .cabal-sandbox/bin/codecov-haskell chatbot-test
