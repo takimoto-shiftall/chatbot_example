@@ -29,4 +29,4 @@ script:
 
 after_script:
   - cabal install codecov-haskell
-  - codecov-haskell chatbot-tests
+  - codecov-haskell chatbot-test
