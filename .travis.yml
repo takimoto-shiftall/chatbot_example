@@ -28,5 +28,5 @@ script:
   - stack --no-terminal test --haddock --no-haddock-deps --coverage
 
 after_script:
-  - cabal sandbox init && cabal install codecov-haskell
-  - .cabal-sandbox/bin/codecov-haskell chatbot-test
+  - travis_retry curl -L https://github.com/rubik/stack-hpc-coveralls/releases/download/v0.0.3.0/shc-linux-x64-$GHCVER.tar.bz2 | tar -xj
+  - ./shc chatbot chatbot-test
