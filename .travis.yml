@@ -15,19 +15,23 @@ addons:
       - libpq-dev
 
 before_install:
+  - TMPVAR=tmpvar
   - mkdir -p ~/.local/bin
   - export PATH=$HOME/.local/bin:$PATH
   - travis_retry curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
   - docker-compose up -d
   - cd chatbot
+  - echo $TMPVAR
 
 install:
+  - echo $TMPVAR
   - stack --no-terminal --install-ghc test --only-dependencies
 
 script:
+  - echo $TMPVAR
   - stack --no-terminal test --haddock --no-haddock-deps --coverage
 
 after_script:
-  - travis_retry curl -L https://github.com/rubik/stack-hpc-coveralls/releases/download/v0.0.3.0/shc-linux-x64-$GHCVER.tar.bz2 | tar -xj
+  - echo $TMPVAR
+  - travis_retry curl -L https://github.com/rubik/stack-hpc-coveralls/releases/download/v0.0.4.0/shc-linux-x64-8.0.1.tar.bz2 | tar -xj
   - ./shc chatbot chatbot-test
-  - pwd
