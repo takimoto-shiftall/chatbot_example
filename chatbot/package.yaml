@@ -40,6 +40,7 @@ dependencies:
 - hs-graph
 - hs-resource
 - hs-orm
+- template-haskell
 
 default-extensions:
   - DataKinds
